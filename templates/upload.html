@@ -1,0 +1,223 @@
+<html>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Summarize</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="{{ url_for('static',filename='styles/styles.css') }}" />
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+   integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+
+<!-- external stylesheet -->
+<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+   integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+
+<body>
+   
+    
+   <div class="header" id="header" style="height: 100px">
+      <nav class="navbar">
+         <div class="container-fluid">
+            <!--Header -->
+            <div class="navbar-header">
+               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#topNavBar">
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+               </button>
+               <a class="navbar-brand" href="#">Summarize</a>
+            </div>
+
+            <!--Items-->
+            <div class="collapse navbar-collapse" id="topNavBar">
+               <ul class="nav navbar-nav navbar-right">
+                  <li class="active">
+                     <a href="/" class="navbar-link"> Home </a>
+                  </li>
+                  <li>
+                     <a href="/" class="navbar-link"> Features </a>
+                  </li>
+                  <li class="">
+                     <a href="/" class="navbar-link"> Contact </a>
+                  </li>
+
+                  <li class="">
+                     <a href="/" class="navbar-link"> Testimonials </a>
+                  </li>
+               </ul>
+            </div>
+         </div>
+      </nav>
+   </div>
+   <!-- <form action = "http://localhost:5000/uploader" method = "POST" 
+         enctype = "multipart/form-data">
+         <input type = "file" name = "file" />
+         <input type = "submit"/>
+      </form> -->
+
+   <section id="Summarizer">
+      <div class="row summarize-row justify-content-center">
+         <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12 summarizer-col summarizer-col-one">
+            <div class="card">
+               <div class="card-body">
+                  <div id="left-header">
+                  <h3 class="card-title">Summarizer</h3>
+                  <div style="display: flex;">
+
+                  
+                  <button id="record-online" class="btn btn-md" style="margin-right: 2rem;">Record Audio Online</button>
+                  <button id="upload-file" class="btn btn-md" style="margin-right: 2rem">Upload Text or Audio File</button>
+                  <button id="delete-file" class="delete-file delete-btn" title="Delete File">
+                     <i class="material-icons">delete</i>
+                  </button>
+               </div>
+               </div>
+
+                 
+                     <div id="record-online-form" class="wrapper record-online-form">
+                        <div class="audio-wrapper hidden" id="audio">
+                          <audio src="" controls class="js-audio audio"></audio>
+                        </div>
+                      
+                        <div class="toolbar" id="toolbar">
+                          <button class="js-start button button--start">Start</button>
+                          <button class="js-stop button button--stop">Stop</button>
+                        </div>
+                      </div>
+
+                      <div class="card-text" id="upload-file-form">
+                        <div class="drop-zone">
+                           <span class="drop-zone__prompt">Drop file here or click to upload</span>
+                           <input type="file" name="file" id="uploaded-file" class="drop-zone__input">
+                        </div>
+                     </div>
+                
+
+
+                  <!-- <form style="width: 400px" action="http://localhost:5000/upload" method="POST"
+                     enctype="multipart/form-data" id="upload-file-form" class=""> -->
+                     
+
+                     <div class="to-summarize">
+                    
+                     <label for="summary-length" style="display: flex;">
+                        <span style="margin-right: 2rem; margin-top: 0.5rem">Short</span>
+
+                        <input type="range" min="10" max="40" id="slider" name="summary-length" style="width: 100px">
+
+
+                        <span style="margin-left: 2rem; margin-top: 0.5rem">Long</span>
+                     </label>
+                     <button type="submit" onclick="submitFile()" class="card-link btn btn-md cta-contact" style="margin-top: 2rem; border: none; outline: none">Generate
+                        Summary</button>
+                     </div>
+                      
+                  <!-- </form> -->
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12 summarizer-col summarizer-col-two" id="summarizer-col-two">
+            <div class="card">
+               <div class="card-body">
+                  <div id="right-header">
+                  <div class="card-title" style="display: flex">
+                     <h3 style="width: 30%; margin-right: 0; margin-left: 0; text-align: left;">Summary</h3>
+                  </div>
+               </div>
+                  <p class="card-text" id="summary-output">
+                    
+                  </p>
+                  <div class="to-copy">
+                  <button  class="card-link" style="background-color: #fff; border: none; outline: none; color: #ffd60a" onclick="copyToClipboard('summary-output')"><i class="material-icons">content_copy</i></button>
+               </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <!-- footer -->
+   <footer>
+      <div class="row" style="margin-left: 2rem; margin-right: 2rem; padding-top: 4rem">
+         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+            <div>
+               <h3>Support</h3>
+               <p style="margin-top: 2rem; line-height: 1.5; margin-bottom: 3rem">
+                  If you would like to book a free demo of our tool or have some
+                  queries, please contact our support team.
+               </p>
+               <span style="color: #000" class="btn btn-md cta-contact">CONTACT SUPPORT</span>
+            </div>
+         </div>
+         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+            <div class="nav-links">
+               <h3>Quick Links</h3>
+               <div style="display: flex; margin-top: 2rem">
+                  <ul style="margin-right: 2rem">
+                     <li>Features</li>
+                     <li>About us</li>
+                  </ul>
+                  <ul>
+                     <li>Contact</li>
+                     <li>Testimonials</li>
+                  </ul>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+            <div class="social-icons">
+               <h3>Social Links</h3>
+               <ul class="social-icons-list">
+                  <li style="margin-right: 2rem">
+                     <a href="#">
+                        <img src="../static/images/facebook.png" />
+                     </a>
+                  </li>
+                  <li style="margin-left: 2rem; margin-right: 2rem">
+                     <a href="#">
+                        <img src="../static/images/linkedin.png" />
+                     </a>
+                  </li>
+                  <li style="margin-left: 2rem; margin-right: 2rem">
+                     <a href="#">
+                        <img src="../static/images/instagram.png" />
+                     </a>
+                  </li>
+                  <li style="margin-left: 2rem; margin-right: 2rem">
+                     <a href="#">
+                        <img src="../static/images/twitter.png" />
+                     </a>
+                  </li>
+                  <li style="margin-left: 2rem; ">
+                     <a href="#">
+                        <img src="../static/images/github.png" />
+                     </a>
+                  </li>
+               </ul>
+            </div>
+            <div>
+               <input type="text" placeholder="" style="
+                width: 150px;
+                height: 33px;
+                border-radius: 6px;
+                border: none;
+                outline: none;
+                padding: 1rem;
+              " />
+               <input class="btn btn-md cta-contact" style="color: #000" placeholder="SEND FEEDBACK" />
+            </div>
+         </div>
+      </div>
+      <hr />
+      <p style="width: 200px; margin: auto; text-align: center; margin-top: 2rem">
+         <strong>Summarize Copyright @2021</strong>
+      </p>
+   </footer>
+   <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+   <script src="../static/js/index.js"></script>
+</body>
+
+</html>
